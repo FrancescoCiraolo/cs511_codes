@@ -12,11 +12,11 @@ example {x y : ℤ} (h1 : x + 3 ≥ 2 * y) (h2 : 1 ≤ y) : x ≥ -1 :=
     _ ≥ 2 * 1 - 3 := by rel [h2]
     _ = -1        := by numbers   
 
+
 -- Ex 2
-example {a b : ℚ} (h1 : 3 ≤ a) (h2 : a + 2 * b ≥ 4) : a + b ≥ 3 :=
-  calc
-    a + b = 
-    sorry
+
+example {a b : ℚ} (h1 : 3 ≤ a) (h2 : a + 2 * b ≥ 4) : a + b ≥ 3 := by
+  linarith [h1, h2]
 
 
 -- Ex 3

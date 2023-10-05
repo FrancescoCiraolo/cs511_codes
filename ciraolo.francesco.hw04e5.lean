@@ -69,5 +69,14 @@ example {n : ℤ} (hn : ∀ m, 1 ≤ m → m ≤ 5 → m ∣ n) : 15 ∣ n := by
   sorry
 
 example : forall_sufficiently_large x : ℝ, x ^ 3 + 3 * x ≥ 7 * x ^ 2 + 12 := by
-  apply?
-  sorry
+  use 1000
+  intro x hx
+  calc
+    x ^ 3 + 3 * x = x * x^2 + 3 * x := by ring
+    _ ≥ 1000 * x ^ 2 + 3 * 1000 := by rel[hx]
+    _ = 1000 * x ^ 2 + 3000 := by ring
+    _ = 993 * x ^ 2 + 7 * x ^ 2 + 3000 := by ring
+    _ ≥  993 * 1000 ^ 2 + 7 * x ^ 2 + 3000 := by rel[hx]
+    _ ≥ 7 * x ^ 2 + 3000 := by extra
+    _ = 7 * x ^ 2 + 2988 + 12 := by ring
+    _ ≥ 7 * x ^ 2 + 12 := by extra

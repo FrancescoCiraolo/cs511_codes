@@ -72,9 +72,11 @@ example {n : ℤ} (hn : Even n) : Odd (n ^ 2 + 2 * n - 5) := by
 
 
 example (a b c : ℤ) : Even (a - b) ∨ Even (a + c) ∨ Even (b - c) := by
+
   by_cases hab : Even (a - b)
   left
   exact hab
+
   by_cases hac : Even (a + c)
   right
   left

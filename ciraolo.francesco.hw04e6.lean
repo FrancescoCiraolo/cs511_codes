@@ -37,7 +37,6 @@ example {x : ℝ} : x ^ 2 + x - 6 = 0 ↔ x = -3 ∨ x = 2 := by
         _ = 0 := by ring
 
 
-
 example {a : ℤ} : a ^ 2 - 5 * a + 5 ≤ -1 ↔ a = 2 ∨ a = 3 := by
   constructor
   · intro h
@@ -49,9 +48,15 @@ example {a : ℤ} : a ^ 2 - 5 * a + 5 ≤ -1 ↔ a = 2 ∨ a = 3 := by
     obtain ⟨hl, hh⟩ := abs_le_of_sq_le_sq' h' h'''
     have hl: 2 ≤ a := by linarith [hl]
     have hh: a ≤ 3 := by linarith [hh]
-    have hx:= And.intro hl hh
-    
-    sorry
+    -- have tmp := Int.le_antisymm hl hh
+    obtain h' | h' := lt_or_eq_of_le hl
+    · refine Or.inr ?mp.intro.inl.h
+      exact Int.le_antisymm hh h'
+    · exact Or.inl (id (Eq.symm h'))
+    -- have hx := Or.inl (lt_or_eq_of_le hl hh)
+    -- -- have hx:= And.intro hl hh
+    -- -- exact hx
+    -- sorry
   · intro h
     obtain h0 | h1 := h
 

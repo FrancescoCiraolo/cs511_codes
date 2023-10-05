@@ -59,29 +59,16 @@ example {n : ℤ} (hn : Even n) : Odd (n ^ 2 + 2 * n - 5) := by
       = (k + k) ^ 2 + 2 * (k + k) - 5 := by rw[hk]
     _ = 2 * (2 * k ^ 2 + 2 * k - 3) + 1 := by ring
 
-example {x : ℝ} (hx : x ^ 2 - 3 * x + 2 = 0) : x = 1 ∨ x = 2 := by
-  have h1 :=
-    calc
-    (x - 1) * (x - 2) = x ^ 2 - 3 * x + 2 := by ring
-    _ = 0 := by rw [hx]
-  have h2 := eq_zero_or_eq_zero_of_mul_eq_zero h1
+-- example {x : ℝ} (hx : x ^ 2 - 3 * x + 2 = 0) : x = 1 ∨ x = 2 := by
+--   have h1 :=
+--     calc
+--     (x - 1) * (x - 2) = x ^ 2 - 3 * x + 2 := by ring
+--     _ = 0 := by rw [hx]
+--   have h2 := eq_zero_or_eq_zero_of_mul_eq_zero h1
 
-  sorry
+--   sorry
 
 -- le_antisymm
-
-example : Prime 2 := by
-  constructor
-  · numbers -- show `2 ≤ 2`
-  intro m hmp
-  have hp : 0 < 2 := by numbers
-  have hmp_le : m ≤ 2 := Nat.le_of_dvd hp hmp
-  have h1m : 1 ≤ m := Nat.pos_of_dvd_of_pos hmp hp
-  interval_cases m
-  · left
-    numbers -- show `1 = 1`
-  · right
-    numbers -- show `2 = 2`
 
 
 example (a b c : ℤ) : Even (a - b) ∨ Even (a + c) ∨ Even (b - c) := by
@@ -96,15 +83,5 @@ example (a b c : ℤ) : Even (a - b) ∨ Even (a + c) ∨ Even (b - c) := by
   right
   right
   exact hbc
-
-  
-  -- have hna : ¬ Even (a - b)
-  -- exact hac
-  -- have h1 := even_ (a - b)
-  -- exact hab
-
-  -- apply Or.imp
-
-
   sorry
 

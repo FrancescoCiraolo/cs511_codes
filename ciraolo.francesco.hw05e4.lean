@@ -40,10 +40,10 @@ example {n : ℕ} : 63 ∣ n ↔ 7 ∣ n ∧ 9 ∣ n := by
       _ = 63 * (4 * b - 3 * a) := by exact Eq.symm (Nat.mul_sub_left_distrib 63 (4 * b) (3 * a))
 
 
-example {k : ℕ} (h : k ^ 2 ≤ 6) : k ^ 2 < 6 ∨ k ^ 2 = 6 := by
-  -- have h' := lt_or_eq_of_le h
-  exact Nat.lt_or_eq_of_le h
-  -- sorry
+-- example {k : ℕ} (h : k ^ 2 ≤ 6) : k ^ 2 < 6 ∨ k ^ 2 = 6 := by
+--   -- have h' := lt_or_eq_of_le h
+--   exact Nat.lt_or_eq_of_le h
+--   -- sorry
 
 -- Ex 5
 example {k : ℕ} : k ^ 2 ≤ 6 ↔ k = 0 ∨ k = 1 ∨ k = 2 := by

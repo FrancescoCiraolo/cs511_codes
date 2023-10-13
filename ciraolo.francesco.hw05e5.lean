@@ -22,31 +22,7 @@ example : ∃! a : ℝ, 3 * a + 1 = 7 := by
     _ = (7 - 1) / 3 := by rw [hy]
     _ = 2 := by numbers
 
--- example {n : ℕ} : 63 ∣ n ↔ 7 ∣ n ∧ 9 ∣ n := by
---   constructor
---   · intros h
---     constructor
---     · refine Iff.mpr dvd_iff_exists_eq_mul_left ?mp.left.a
---       use 63
---       have h' := exists_eq_mul_right_of_dvd h
---       obtain ⟨k, hk⟩ := h'
 
---       obtain h'' | h'' := eq_or_ne k 7
---       · rw[hk, h'']
---       · simp at h''
---         have t := Nat.div_eq_of_eq_mul_left (by extra)
---         have t := Iff.mpr div_eq_iff_eq_mul hk
---         -- obtain t | t := ne_or_eq k 
---         sorry
---     · 
---       sorry
---   · intros h
---     obtain ⟨h7, h9⟩ := h
---     dsimp [(.∣.)] at *
---     obtain ⟨a,ha⟩ := h7 
---     obtain ⟨b,hb⟩ := h9
-
---     sorry
 
 
 -- example : ∃! x : ℚ, ∀ a, a ≥ 1 → a ≤ 3 → (a - x) ^ 2 ≤ 1 := by
@@ -72,9 +48,21 @@ example : ∃! a : ℝ, 3 * a + 1 = 7 := by
 --     sorry
 
 example : ∃! x : ℚ, 4 * x - 3 = 9 := by
-  
-  sorry
+  use 3
+  dsimp
+  constructor
+  · numbers
+  intro y hy
+  calc 
+    y = (4 * y - 3 + 3) / 4 := by ring
+    _ = (9 + 3) / 4 := by rw[hy]
+    _ = 3 := by numbers
 
 
 example : ∃! n : ℕ, ∀ a, n ≤ a := by
-  sorry
+  use 0
+  dsimp
+  constructor
+  · exact fun a ↦ Nat.zero_le a
+  intros y hy
+  exact Iff.mp Nat.le_zero (hy 0)

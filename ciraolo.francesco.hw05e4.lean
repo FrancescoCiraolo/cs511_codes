@@ -12,40 +12,33 @@ import Library.Tactic.Use
 
 -- Execises @ 4.2.10
 
--- Ex 1
-example {x : ℝ} : 2 * x - 1 = 11 ↔ x = 6 := by
-  constructor
-  · intro h
-    have h : 2 * x = 12 := by addarith[h]
-    calc
-      x = (2 * x) / 2 := by ring
-      _ = 12 / 2 := by rw[h]
-      _ = 6 := by numbers
-  · intro h
-    calc
-      2 * x - 1 = 2 * 6 - 1 := by rw[h]
-      _ = 11 := by numbers
-
 -- Ex 2
-example {n : ℤ} : 63 ∣ n ↔ 7 ∣ n ∧ 9 ∣ n := by
+example {n : ℕ} : 63 ∣ n ↔ 7 ∣ n ∧ 9 ∣ n := by
   constructor
-  · intro h
-    refine Iff.mpr (and_iff_right ?mp.ha) ?mp.a
-    · refine Iff.mpr dvd_iff_exists_eq_mul_left ?mp.ha.a
-      -- use 9
-      -- obtain ⟨b, hb⟩ := h
+  · intros h
+    constructor
+    · have t : 7 ∣ 63 := by exact Iff.mpr (Nat.dvd_iff_div_mul_eq 63 7) rfl
+      exact Nat.dvd_trans t h
+    · have t : 9 ∣ 63 := by exact Iff.mpr (Nat.dvd_iff_div_mul_eq 63 9) rfl
+      exact Nat.dvd_trans t h
+  · intros h
+    obtain ⟨h7, h9⟩ := h
+    dsimp [(.∣.)] at *
+    obtain ⟨a,ha⟩ := h7 
+    obtain ⟨b,hb⟩ := h9
+    use 4 * b - 3 * a
+    -- have : n = n + n - n := by ring
+    have t : 27 * n = 63 * (3 * a) := calc
+      27 * n = 27 * (7 * a) := by rw[ha]
+      _ = 63 * (3 * a) := by ring
+    calc
+      n = n + 27 * n - 27 * n := by exact Eq.symm (Nat.add_sub_cancel n (27 * n))
+      _ = 28 * n - 27 * n := by ring
+      _ = 28 * n - 63 * (3 * a) := by rw[t]
+      _ = 28 * (9 * b) - 63 * (3 * a) := by rw[hb]
+      _ = 63 * (4 * b) - 63 * (3 * a) := by ring
+      _ = 63 * (4 * b - 3 * a) := by exact Eq.symm (Nat.mul_sub_left_distrib 63 (4 * b) (3 * a))
 
-      have h' := exists_eq_mul_left_of_dvd h
-      obtain ⟨b, hb⟩ := h'
-      use 63
-      
-      -- have h'' : Exists.elim h'
-      sorry
-    · sorry
-  · intro h
-    obtain ⟨n7, n9⟩ := h
-
-    sorry
 
 example {k : ℕ} (h : k ^ 2 ≤ 6) : k ^ 2 < 6 ∨ k ^ 2 = 6 := by
   -- have h' := lt_or_eq_of_le h

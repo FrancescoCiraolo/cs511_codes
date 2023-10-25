@@ -31,11 +31,20 @@ example : ¬ (∃ n : ℕ, n ^ 2 = 2) := by
       _ = n^2 := by ring
 
 -- 4 (b)
-
 example (P Q : Prop) : ¬ (P → Q) ↔ (P ∧ ¬ Q) := by
-  push_neg
   constructor
-  · intros h
-    apply h
-  · intros h
-    apply h
+  · intros h'
+    by_cases P ∧ ¬Q
+    · apply h
+    · apply False.elim
+      apply h'
+      intros p
+      rw[not_and_or] at h
+      obtain h | h := h
+      · contradiction
+      · rw [not_not] at h
+        apply h
+  · intros h' h''
+    obtain ⟨p, nq⟩ := h'
+    have h' :=  h'' p
+    contradiction
